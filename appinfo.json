@@ -1,0 +1,73 @@
+{
+   "uuid": "951a9bb1-4c60-48d4-baca-60ed8bc88349",
+   "shortName": "PebbleBit",
+   "longName": "PebbleBit",
+   "companyName": "code1up.com",
+   "versionCode": 1,
+   "versionLabel": "1.0.0",
+   "watchapp": {
+      "watchface": true
+   },
+   "capabilities": [
+      "configurable"
+   ],
+   "appKeys": {
+      "steps": 0
+   },
+   "resources": {
+      "media": [
+         {
+            "menuIcon": true,
+            "type": "png",
+            "name": "IMAGE_MENU_ICON",
+            "file": "images/menu_icon_pebblebit.png"
+         },
+         {
+            "type": "png",
+            "name": "OVERLAY",
+            "file": "images/overlay.png"
+         },
+         {
+            "type": "png",
+            "name": "BATTERY_100",
+            "file": "images/battery_100.png"
+         },
+         {
+            "type": "png",
+            "name": "BATTERY_75",
+            "file": "images/battery_75.png"
+         },
+         {
+            "type": "png",
+            "name": "BATTERY_25",
+            "file": "images/battery_25.png"
+         },
+         {
+            "type": "png",
+            "name": "BATTERY_0",
+            "file": "images/battery_0.png"
+         },
+         {
+            "type": "png",
+            "name": "BLUETOOTH_CONNECTED",
+            "file": "images/bluetooth_connected.png"
+         },
+         {
+            "type": "font",
+            "name": "FONT_ROBOTO_CONDENSED_21",
+            "file": "fonts/Roboto-Condensed.ttf"
+         },
+         {
+            "characterRegex":"[:0-9]",
+            "type":"font",
+            "name":"FONT_ROBOTO_BOLD_SUBSET_49",
+            "file":"fonts/Roboto-Bold.ttf"
+         },
+         {
+            "type": "font",
+            "name": "FONT_ARCADE_N_24",
+            "file": "fonts/ARCADE_N.TTF"
+         }
+      ]
+   }
+}
