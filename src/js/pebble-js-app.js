@@ -1,3 +1,5 @@
+
+// Rec4EstU
 // "ready" event handler.
 var ready = function (e) {
     console.log("PebbleBit:ready()");
@@ -9,6 +11,24 @@ var showConfiguration = function () {
 
     Pebble.openURL("https://pebblebit.azurewebsites.net?pebble=1");
 };
+
+var sendPebbleStatusAppMessage = function(status) {
+    Pebble.sendAppMessage({
+        status: status
+    });
+}
+
+var sendPebbleErrorAppMessage = function(error) {
+    Pebble.sendAppMessage({
+        error: error
+    });
+}
+
+var sendPebbleStepsAppMessage = function(steps) {
+    Pebble.sendAppMessage({
+        steps: steps
+    });
+}
 
 var webviewclosed = function (e) {
     console.log("PebbleBit:webviewclosed()");
@@ -23,17 +43,13 @@ var webviewclosed = function (e) {
     window.localStorage.setItem("accessTokenSecret", payload.accessTokenSecret);
     window.localStorage.setItem("steps", payload.steps);
 
-    Pebble.sendAppMessage({
-        steps: payload.steps
-    });
+    sendPebbleStepsAppMessage(payload.steps);
 };
 
-var fetchSteps = function () {
-    console.log("PebbleBit:fetchSteps()");
+var getSteps = function () {
+    console.log("PebbleBit:getSteps()");
 
-    Pebble.sendAppMessage({
-        steps: 10
-    });
+    sendPebbleStatusAppMessage("...");
 
     var url = "https://pebblebit.azurewebsites.net/steps";
 
@@ -46,19 +62,17 @@ var fetchSteps = function () {
     var request = new XMLHttpRequest();
 
     request.onerror = function (e) {
-        console.log("PebbleBit:fetchSteps:error()");
+        console.log("PebbleBit:getSteps:error()");
 
         var ejson = JSON.stringify(e);
 
         console.log(ejson);
 
-        Pebble.sendAppMessage({
-            steps: -999
-        });
+        sendPebbleErrorAppMessage("E1");
     };
 
     request.onload = function (e) {
-        console.log("PebbleBit:fetchSteps:onload()");
+        console.log("PebbleBit:getSteps:onload()");
 
         var ejson = JSON.stringify(e);
 
@@ -73,10 +87,7 @@ var fetchSteps = function () {
             console.log("HTTP Status");
             console.log(request.status);
 
-            Pebble.sendAppMessage({
-                steps: -request.status
-            });
-
+            sendPebbleErrorAppMessage("E2");
             return;
         }
 
@@ -84,14 +95,10 @@ var fetchSteps = function () {
 
         var payload = JSON.parse(request.responseText);
 
-        Pebble.sendAppMessage({
-            steps: payload.steps
-        });
+        sendPebbleStepsAppMessage(payload.steps);
     };
 
-    Pebble.sendAppMessage({
-        steps: 20
-    });
+    sendPebbleStatusAppMessage("..");
 
     request.open("GET", url, true);
     request.send(null);
@@ -101,7 +108,7 @@ var appmessage = function (e) {
     console.log("PebbleBit:appmessage()");
 
     if (e.payload.steps) {
-        fetchSteps();
+        getSteps();
     }
 };
 

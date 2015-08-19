@@ -1,27 +1,18 @@
+#include "controller.h"
 #include "handlers.h"
-#include "ui.h"
 
 void bluetooth_connection_handler(bool connected) {
-  ui_draw_bluetooth_icon(connected);
+  controller_notify_bluetooth_state(connected);
 }
 
 void battery_state_handler(BatteryChargeState charge_state) {
-  ui_draw_battery_charge_icon(charge_state);
+  controller_notify_battery_state(charge_state);
 }
 
 void tick_timer_handler(struct tm* tick_time, TimeUnits units_changed) {
-  static char time_text[] = "00:00"; // Needs to be static because it's used by the system later.
-
   APP_LOG(APP_LOG_LEVEL_DEBUG, "----> tick_timer_handler()");
 
-  strftime(time_text, sizeof(time_text), "%R", tick_time);
-  /// text_layer_set_text(time_layer, time_text);
-
-  // TODO: Update battery and Bluetooth states every minute.
-  // battery_state_handler(battery_state_service_peek());
-  // bluetooth_connection_handler(bluetooth_connection_service_peek());
-
-  /// fetch_steps();
+  controller_tick(tick_time);
 }
 
 void handlers_init() {
